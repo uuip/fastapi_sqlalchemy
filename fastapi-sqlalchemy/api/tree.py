@@ -30,9 +30,8 @@ async def update_tree(item: Item, s: SessionDep, user: UserDep):
     qs = update(Trees).where(Trees.id == item.id).values(energy=item.energy)
     await s.execute(qs)
     user.updated_at = func.current_timestamp()
-    operator = user.username
     await s.commit()
-    return OK({"id": item.id, "operator": operator})
+    return OK({"id": item.id, "operator": user.username})
 
     # return OK(obj)
     # return JSONResponse(status_code=status.HTTP_201_CREATED, content=item)
