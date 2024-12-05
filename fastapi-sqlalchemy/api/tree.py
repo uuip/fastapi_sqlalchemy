@@ -27,7 +27,6 @@ async def query_tree(id: int, s: SessionDep):
 
 @data_api.post("/update", summary="更新单个树木信息")
 async def update_tree(item: Item, s: SessionDep, user: UserDep):
-    print(id(s), type(s), update_tree)
     qs = update(Trees).where(Trees.id == item.id).values(energy=item.energy)
     await s.execute(qs)
     user.updated_at = func.current_timestamp()
